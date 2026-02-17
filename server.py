@@ -21,7 +21,7 @@ Environment Variables:
 import os
 import logging
 import sys
-from typing import Dict, Any, Optional
+from typing import Any, Callable, Dict, List, Optional, Sequence, Set, Tuple, Union
 from datetime import datetime
 
 import requests
@@ -113,14 +113,14 @@ logger.info(f"✅ FastMCP server created")
 )
 async def serper_search(
     context: Context,
-    q: Optional[str] = None,
+    q: str,
     gl: Optional[str] = None,
     hl: Optional[str] = None,
     location: Optional[str] = None,
     autocorrect: bool = False,
     num: Optional[float] = None,
     page: Optional[float] = None
-) -> Dict[str, Any]:
+) -> Any:
     """
     Perform a Google web search using Serper. Returns high-level structured SERP signals such as knowledge graph and answer boxes.
 
@@ -137,19 +137,10 @@ async def serper_search(
         page: Page number for pagination. (optional) Examples: 1
 
     Returns:
-        Dictionary with API response
+        API response (dict, list, or other JSON type)
 
     Example Usage:
-        # Minimal (required params only):
         await serper_search(q="openai company")
-
-        # With optional parameters:
-        await serper_search(
-        q="openai company",
-        gl="us",
-        hl="en",
-        location="Lagos, Nigeria"
-    )
 
         Note: 'context' parameter is auto-injected by MCP framework
     """
@@ -163,6 +154,8 @@ async def serper_search(
         headers = {}
         if api_key:
             headers["X-API-Key"] = api_key
+            # Also send Bearer for robustness (most APIs use Bearer)
+            headers["Authorization"] = f"Bearer {api_key}"
 
         response = requests.post(
             url,
@@ -207,14 +200,14 @@ async def serper_search(
 )
 async def serper_news(
     context: Context,
-    q: Optional[str] = None,
+    q: str,
     gl: Optional[str] = None,
     hl: Optional[str] = None,
     location: Optional[str] = None,
     autocorrect: bool = False,
     num: Optional[float] = None,
     page: Optional[float] = None
-) -> Dict[str, Any]:
+) -> Any:
     """
     Perform a Google News search using Serper. Returns structured news article metadata.
 
@@ -231,19 +224,10 @@ async def serper_news(
         page: Page number for pagination. (optional) Examples: 1
 
     Returns:
-        Dictionary with API response
+        API response (dict, list, or other JSON type)
 
     Example Usage:
-        # Minimal (required params only):
         await serper_news(q="openai funding")
-
-        # With optional parameters:
-        await serper_news(
-        q="openai funding",
-        gl="us",
-        hl="en",
-        location="New York, USA"
-    )
 
         Note: 'context' parameter is auto-injected by MCP framework
     """
@@ -257,6 +241,8 @@ async def serper_news(
         headers = {}
         if api_key:
             headers["X-API-Key"] = api_key
+            # Also send Bearer for robustness (most APIs use Bearer)
+            headers["Authorization"] = f"Bearer {api_key}"
 
         response = requests.post(
             url,
@@ -301,14 +287,14 @@ async def serper_news(
 )
 async def serper_scholar(
     context: Context,
-    q: Optional[str] = None,
+    q: str,
     gl: Optional[str] = None,
     hl: Optional[str] = None,
     location: Optional[str] = None,
     autocorrect: bool = False,
     num: Optional[float] = None,
     page: Optional[float] = None
-) -> Dict[str, Any]:
+) -> Any:
     """
     Perform a Google Scholar search using Serper. Returns structured academic metadata.
 
@@ -325,19 +311,10 @@ async def serper_scholar(
         page: Page number for pagination. (optional) Examples: 1
 
     Returns:
-        Dictionary with API response
+        API response (dict, list, or other JSON type)
 
     Example Usage:
-        # Minimal (required params only):
         await serper_scholar(q="retrieval augmented generation")
-
-        # With optional parameters:
-        await serper_scholar(
-        q="retrieval augmented generation",
-        gl="us",
-        hl="en",
-        location="Zurich, Switzerland"
-    )
 
         Note: 'context' parameter is auto-injected by MCP framework
     """
@@ -351,6 +328,8 @@ async def serper_scholar(
         headers = {}
         if api_key:
             headers["X-API-Key"] = api_key
+            # Also send Bearer for robustness (most APIs use Bearer)
+            headers["Authorization"] = f"Bearer {api_key}"
 
         response = requests.post(
             url,

@@ -232,7 +232,7 @@ The `deployment_params.json` file contains the deployment configuration for this
   "github_url": "https://github.com/Traia-IO/serper-api-mcp-server",
   "mcp_server": {
     "name": "serper-api-mcp",
-    "description": "Test deployment of serper google search api - search, news, images, places via serper.dev",
+    "description": "Serper internet data api",
     "server_type": "streamable-http",
 "requires_api_key": true,
     "api_key_header": "Authorization",
